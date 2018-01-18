@@ -69,6 +69,7 @@ export class MonsterDetailComponent implements OnInit {
   }
 
   loadData(){
+    this.showMonster = false;
     this.cookie = this.cookieService.check('creatures-token');
     this.checkIfCookieExist();
     this.http.get<Monster>(this.config.apiEndpoint + '/pa165/rest/auth/monsters/' + this.monsterId, {withCredentials: true}).subscribe(
@@ -76,14 +77,14 @@ export class MonsterDetailComponent implements OnInit {
       console.log('Monster detail loaded:\n' + data);
       this.monster = data;
       this.showMonster = true;
-      this.selectedAgility = data.agility == null ? 'null' : data.agility;
+      this.selectedAgility = data.agility;
       });
   }
 
   updateMonster(name, height, weight, agility){
     this.cookie = this.cookieService.check('creatures-token');
     this.checkIfCookieExist();
-    var json = {"name":name, "height":height, "weight":weight, "agility":agility};
+    let json = {"name":name, "height":height, "weight":weight, "agility":agility};
     console.log(json);
     this.http.put(this.config.apiEndpoint + '/pa165/rest/auth/monsters/' + this.monsterId, json, {withCredentials: true}).subscribe(
       data => {

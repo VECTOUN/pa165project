@@ -83,7 +83,7 @@ export class WeaponDetailComponent implements OnInit {
         console.log('Weapon detail loaded:\n' + data);
         this.weapon = data;
         this.showWeapon = true;
-        this.weaponType = data.type == null ? 'null' : data.type;
+        this.weaponType = data.type;
         this.appropriateMonsters = data.appropriateMonsters;
         this.dataSource = new MatTableDataSource(this.appropriateMonsters);
         this.showWeapon = true;
@@ -122,7 +122,7 @@ export class WeaponDetailComponent implements OnInit {
   updateWeapon(name, weaponType, range, magazineCapacity){
     this.cookie = this.cookieService.check('creatures-token');
     this.checkIfCookieExist();
-    var json = {"id":this.weaponId,"name": name,"type":weaponType, "range":range, "magazineCapacity":magazineCapacity};
+    let json = {"id":this.weaponId,"name": name,"type":weaponType, "range":range, "magazineCapacity":magazineCapacity};
     this.http.put(this.config.apiEndpoint + '/pa165/rest/auth/weapons/update/' + this.weaponId, json, {withCredentials: true}).subscribe(
       data => {
         console.log("Updating weapon with name: " + name + ", type: " + weaponType + ", range: "+ range + "and magazine capacity: " + magazineCapacity + "was successful.");
